@@ -15,6 +15,17 @@ export default StyleSheet.create({
     fontSize: 18,
     color: "gray",
   },
+  galleryButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#007AFF",
+    borderRadius: 10,
+    alignSelf: "center",
+  },
+  galleryButtonText: {
+    color: "white",
+    fontSize: 18,
+  },
   button: {
     marginTop: 20,
     padding: 10,
@@ -36,5 +47,10 @@ export default StyleSheet.create({
     height: "80%",
     resizeMode: "contain",
   },
-  
+  image: {
+    width: 100,
+    height: 100,
+    margin: 5,
+    borderRadius: 10,
+  },
 });

@@ -1,4 +1,5 @@
-import { TouchableOpacity, Image, StyleSheet } from "react-native";
+import { TouchableOpacity, Image } from "react-native";
+import styles from "../styles/galleryStyles";
 import { useRouter } from "expo-router";
 
 export default function GalleryItem({ uri }) {
@@ -10,12 +11,3 @@ export default function GalleryItem({ uri }) {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  image: {
-    width: 100,
-    height: 100,
-    margin: 5,
-    borderRadius: 10,
-  },
-});
