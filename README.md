@@ -1,50 +1,79 @@
-# Welcome to your Expo app 👋
+# 📱 Food Lens - Identificador de Alimentos e Receitas
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Um aplicativo móvel desenvolvido com Expo que utiliza a câmera do celular para identificar alimentos e sugerir receitas relacionadas.
 
-## Get started
+## 🎯 Sobre o Projeto
 
-1. Install dependencies
+Este é um projeto acadêmico que demonstra a integração de visão computacional com uma interface móvel intuitiva. O aplicativo permite que usuários:
 
+- 📸 Usem a câmera para identificar alimentos em tempo real
+- 🔍 Visualizem receitas que contêm o alimento identificado
+- 📖 Acessem detalhes completos das receitas
+- 🔄 Carreguem mais opções de receitas
+- 📱 Interface amigável e responsiva
+
+## 🚀 Tecnologias Utilizadas
+
+- [Expo](https://expo.dev)
+- [React Native](https://reactnative.dev/)
+- [Vision Camera](https://mrousavy.com/react-native-vision-camera/)
+- [MLKit Image Labeling](https://developers.google.com/ml-kit)
+
+## ⚙️ Como Executar
+
+1. Clone o repositório:
+   ```bash
+   git clone [URL_DO_SEU_REPOSITORIO]
+   cd camera-app
+   ```
+
+2. Instale as dependências:
    ```bash
    npm install
    ```
 
-2. Start the app
-
+3. Inicie o projeto:
    ```bash
-    npx expo start
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. Escaneie o QR Code com:
+   - 📱 Android: App Expo Go
+   - 📱 iOS: Câmera do celular
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📱 Funcionalidades
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Identificação de Alimentos
+- Detecção em tempo real
+- Filtragem inteligente de resultados
+- Categorização automática de alimentos
 
-## Get a fresh project
+### Busca de Receitas
+- Sugestões baseadas no alimento identificado
+- Opção de carregar mais receitas
+- Visualização detalhada das receitas
 
-When you're ready, run:
+### Interface
+- Design intuitivo
+- Feedback visual em tempo real
+- Navegação fluida entre telas
 
-```bash
-npm run reset-project
-```
+## 👥 Desenvolvedores
+- Emanuel Pereira do Nascimento Andrade
+- Luis Gustavo Theml Novais
+- Urias Góes Santos Rocha
+- Mayara Mikaelly de Paula
+- Marciana Pereira
+- Marilia Carvalha 
+- Julia Lopes
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 📚 Documentação Adicional
 
-## Learn more
+Para mais informações sobre as tecnologias utilizadas:
+- [Documentação Expo](https://docs.expo.dev/)
+- [Vision Camera Docs](https://mrousavy.com/react-native-vision-camera/docs/)
+- [React Native Docs](https://reactnative.dev/docs/getting-started)
 
-To learn more about developing your project with Expo, look at the following resources:
+## 📝 Licença
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Este projeto é um trabalho acadêmico desenvolvido para [Nome da Instituição].
