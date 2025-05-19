@@ -5,30 +5,37 @@ import { useState, useEffect } from 'react';
 import { searchRecipes } from '../../infra/services/recipeSearchService';
 import RecipeModal from '../../components/RecipeModal';
 import styles from '../../styles/cameraStyles';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function CameraScreen() {
-    const { frameProcessor, detectedFood, isProcessing } = useCameraImageLabeler();
+    const { 
+        frameProcessor, 
+        detectedFood, 
+        isProcessing,
+        resetDetection,
+        getFoodCategory 
+    } = useCameraImageLabeler();
+    
     const [initialMessage, setInitialMessage] = useState('Aponte a câmera para um alimento');
     const [recipes, setRecipes] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
 
     useEffect(() => {
-        if(detectedFood) {
+        if(detectedFood?.name) {
             setInitialMessage('');
         }
     }, [detectedFood]);
 
     const handleSearch = async () => {
-        if (detectedFood) {
+        if (detectedFood?.name) {
             setIsSearching(true);
             try {
-                const results = await searchRecipes(detectedFood);
+                const results = await searchRecipes(detectedFood.name);
                 setRecipes(results);
                 setModalVisible(true);
             } catch (error) {
                 console.error('Erro ao buscar receitas:', error);
-                // Aqui você pode adicionar um feedback visual para o usuário
             } finally {
                 setIsSearching(false);
             }
@@ -42,12 +49,14 @@ export default function CameraScreen() {
                 frameProcessor={frameProcessor}
                 isActive={true}
             />
+            
             {isProcessing && (
                 <View style={styles.loadingOverlay}>
                     <ActivityIndicator size="large" color="white" />
                     <Text style={styles.loadingText}>Processando...</Text>
                 </View>
             )}
+
             {!detectedFood && initialMessage ? (
                 <View style={styles.initialMessageOverlay}>
                     <Text style={styles.initialMessageText}>{initialMessage}</Text>
@@ -55,9 +64,17 @@ export default function CameraScreen() {
             ) : (
                 detectedFood && (
                     <View style={styles.overlay}>
-                        <Text style={styles.foodLabel}>
-                            {detectedFood}
-                        </Text>
+                        <View style={styles.foodInfo}>
+                            <Text style={styles.foodLabel}>
+                                {detectedFood.name}
+                            </Text>
+                            {detectedFood.category && (
+                                <Text style={styles.categoryLabel}>
+                                    Categoria: {detectedFood.category}
+                                </Text>
+                            )}
+                        </View>
+                        
                         <TouchableOpacity
                             style={styles.searchButton}
                             onPress={handleSearch}
@@ -66,8 +83,29 @@ export default function CameraScreen() {
                             {isSearching ? (
                                 <ActivityIndicator color="white" />
                             ) : (
-                                <Text style={styles.buttonText}>Buscar Receitas</Text>
+                                <>
+                                    <MaterialIcons 
+                                        name="search" 
+                                        size={24} 
+                                        color="white" 
+                                        style={styles.searchIcon}
+                                    />
+                                    <Text style={styles.buttonText}>
+                                        Buscar Receitas
+                                    </Text>
+                                </>
                             )}
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.resetButton}
+                            onPress={resetDetection}
+                        >
+                            <MaterialIcons 
+                                name="refresh" 
+                                size={24} 
+                                color="white" 
+                            />
                         </TouchableOpacity>
                     </View>
                 )
@@ -75,7 +113,10 @@ export default function CameraScreen() {
 
             <RecipeModal 
                 visible={modalVisible}
-                onClose={() => setModalVisible(false)}
+                onClose={() => {
+                    setModalVisible(false);
+                    resetDetection();
+                }}
                 recipes={recipes}
             />
         </View>

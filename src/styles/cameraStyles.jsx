@@ -61,4 +61,27 @@ export default StyleSheet.create({
         marginTop: 10,
         fontSize: 16,
     },
+    foodInfo: {
+    alignItems: 'center',
+    marginBottom: 15,
+    },
+    categoryLabel: {
+        color: 'white',
+        fontSize: 16,
+        backgroundColor: 'rgba(0,0,0,0.7)',
+        padding: 5,
+        borderRadius: 4,
+        marginTop: 5,
+    },
+    searchIcon: {
+        marginRight: 8,
+    },
+    resetButton: {
+        position: 'absolute',
+        right: 20,
+        top: 20,
+        backgroundColor: 'rgba(0,0,0,0.7)',
+        padding: 10,
+        borderRadius: 25,
+    },
 });
