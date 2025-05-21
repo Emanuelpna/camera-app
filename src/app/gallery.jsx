@@ -2,8 +2,8 @@ import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
-import GalleryItem from "../../components/galleryItem";
-import styles from "../../styles/galleryStyles";
+import GalleryItem from "../components/galleryItem";
+import styles from "../styles/galleryStyles";
 
 export default function GalleryScreen() {
   const router = useRouter();
@@ -24,7 +24,6 @@ export default function GalleryScreen() {
 
   return (
     <View style={styles.container}>
-
       {photos.length > 0 ? (
         <FlatList
           data={photos}
