@@ -1,21 +1,18 @@
 export const FOOD_CATEGORIES = {
     frutas: [
-        "fruit", "cuisine", "fast food", "food", "maçã", "banana", "laranja", "uva", "morango",
-        "melancia", "kiwi", "abacaxi", "manga", "mirtilo",
-        "pêra", "limão", "mamão", "goiaba"
+        "fruit", "cuisine", "fast food", "food", "apple", "banana", "orange", "grappe", "strawberry",
+        "watermelon", "kiwi", "pinapple"
     ],
     legumes: [
-        "cenoura", "tomate", "batata", "cebola", "alface",
-        "pepino", "brócolis", "pimentão", "milho", "abobrinha",
-        "berinjela", "abóbora", "beterraba"
+        "carrot", "tomato", "potato", "onion", "lettuce",
+        "red pepper", "corn"
     ],
     proteinas: [
-        "frango", "carne", "peixe", "ovo", "porco",
-        "camarão", "tofu", "feijão", "lentilha"
+        "chicken", "meat", "fish", "egg", "pork",
+        "shrimp", "tofu", "beans"
     ],
     graos: [
-        "arroz", "pão", "macarrão", "aveia", "quinoa",
-        "trigo", "cevada", "milho"
+        "rice", "bread", "pasta"
     ]
 };
 

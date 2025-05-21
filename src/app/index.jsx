@@ -1,16 +1,37 @@
-import { useEffect, useRef, useState } from "react";
-import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
-import { CameraRoll } from "@react-native-camera-roll/camera-roll";
-import GalleryButton from "../components/galleryButton";
-import { useRouter } from "expo-router";
+import { MaterialIcons } from "@expo/vector-icons";
 
-export default function Index() {
-  const camera = useRef(null);
+import { useCameraImageLabeler } from "../infra/hooks/useImageLabeler";
+import { searchRecipes } from "../infra/services/recipeSearchService";
+
+import RecipeModal from "../components/RecipeModal";
+
+import styles from "../styles/cameraStyles";
+
+export default function CameraScreen() {
+  const {
+    frameProcessor,
+    detectedFood,
+    isProcessing,
+    resetDetection,
+    getFoodCategory,
+  } = useCameraImageLabeler();
+
+  const [initialMessage, setInitialMessage] = useState(
+    "Aponte a câmera para um alimento"
+  );
+  const [recipes, setRecipes] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [hasPermission, setHasPermission] = useState(false);
-  const [photos, setPhotos] = useState([]);
-
-  const router = useRouter();
 
   useEffect(() => {
     Camera.requestCameraPermission().then((permission) =>
@@ -18,62 +39,100 @@ export default function Index() {
     );
   }, []);
 
-  useEffect(() => {
-    async function getPhotos() {
-      const gallery = await CameraRoll.getPhotos({
-        first: 10,
-        groupName: "MobileCameraContextualizada",
-      });
-      setPhotos(gallery.edges.map((photo) => photo.node.image.uri));
-    }
-    getPhotos();
-  }, []);
-
   const devices = useCameraDevices();
   const device = devices[0];
 
-  async function takePhoto() {
-    if (!camera.current) return;
+  useEffect(() => {
+    if (detectedFood?.name) {
+      setInitialMessage("");
+    }
+  }, [detectedFood]);
 
-    const photo = await camera.current.takePhoto();
-    await CameraRoll.saveAsset(`file://${photo.path}`, {
-      type: "photo",
-      album: "MobileCameraContextualizada",
-    });
-
-    const result = await fetch(`file://${photo.path}`);
-    const data = await result.blob();
-    const imageURI = URL.createObjectURL(data);
-  }
+  const handleSearch = async () => {
+    if (detectedFood?.name) {
+      setIsSearching(true);
+      try {
+        const results = await searchRecipes(detectedFood.name);
+        setRecipes(results);
+        setModalVisible(true);
+      } catch (error) {
+        console.error("Erro ao buscar receitas:", error);
+      } finally {
+        setIsSearching(false);
+      }
+    }
+  };
 
   return (
-    <View style={StyleSheet.absoluteFill}>
-      {!hasPermission && <Text>No Camera Permission.</Text>}
-      {hasPermission && device != null && (
-        <Camera
-          style={StyleSheet.absoluteFill}
-          ref={camera}
-          photo={true}
-          isActive={true}
-          device={device}
-        />
-      )}
-
-      <Button title="Tirar Foto" onPress={takePhoto} />
-      <Button
-        title="Identificar Alimentos"
-        onPress={() => router.push("/camera")}
+    <View style={styles.container}>
+      <Camera
+        style={StyleSheet.absoluteFill}
+        frameProcessor={frameProcessor}
+        isActive={true}
+        device={device}
       />
 
-      {photos.map((photo) => (
-        <Image
-          key={photo}
-          source={{ uri: photo }}
-          style={{ height: 200, width: null, flex: 1 }}
-        />
-      ))}
+      {isProcessing && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="white" />
+          <Text style={styles.loadingText}>Processando...</Text>
+        </View>
+      )}
 
-      <GalleryButton />
+      {!detectedFood && initialMessage ? (
+        <View style={styles.initialMessageOverlay}>
+          <Text style={styles.initialMessageText}>{initialMessage}</Text>
+        </View>
+      ) : (
+        detectedFood && (
+          <View style={styles.overlay}>
+            <View style={styles.foodInfo}>
+              <Text style={styles.foodLabel}>{detectedFood.name}</Text>
+              {detectedFood.category && (
+                <Text style={styles.categoryLabel}>
+                  Categoria: {detectedFood.category}
+                </Text>
+              )}
+            </View>
+
+            <TouchableOpacity
+              style={styles.searchButton}
+              onPress={handleSearch}
+              disabled={isSearching}
+            >
+              {isSearching ? (
+                <ActivityIndicator color="white" />
+              ) : (
+                <>
+                  <MaterialIcons
+                    name="search"
+                    size={24}
+                    color="white"
+                    style={styles.searchIcon}
+                  />
+                  <Text style={styles.buttonText}>Buscar Receitas</Text>
+                </>
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.resetButton}
+              onPress={resetDetection}
+            >
+              <MaterialIcons name="refresh" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+        )
+      )}
+
+      <RecipeModal
+        visible={modalVisible}
+        onClose={() => {
+          setModalVisible(false);
+          resetDetection();
+        }}
+        recipes={recipes}
+      />
     </View>
   );
 }
