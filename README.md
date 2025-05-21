@@ -31,15 +31,15 @@ Este é um projeto acadêmico que demonstra a integração de visão computacion
    ```bash
    npm install
    ```
+3. [Opcional] No seu celular Android, ative o modo de depuração e conecte ao celular via USB
 
-3. Inicie o projeto:
+4. Inicie o projeto:
    ```bash
-   npx expo start
+   npx expo run:android --device
    ```
 
-4. Escaneie o QR Code com:
-   - 📱 Android: App Expo Go
-   - 📱 iOS: Câmera do celular
+   >O argumento `--device` irá abrir um prompt perguntando em qual aparelho contectar. É interessante tanto em casos onde você tem tanto emulador quanto celular conectados e quer escolher qual entrar. Mas também caso só tenho o celular pois em alguns casos ele deu erro ao não achar o celular por não esperar a resposta da solicitação de permissão que aparece no dispositivo conectado.
+   
 
 ## 📱 Funcionalidades
 
@@ -52,11 +52,6 @@ Este é um projeto acadêmico que demonstra a integração de visão computacion
 - Sugestões baseadas no alimento identificado
 - Opção de carregar mais receitas
 - Visualização detalhada das receitas
-
-### Interface
-- Design intuitivo
-- Feedback visual em tempo real
-- Navegação fluida entre telas
 
 ## 👥 Desenvolvedores
 - Emanuel Pereira do Nascimento Andrade
@@ -73,7 +68,3 @@ Para mais informações sobre as tecnologias utilizadas:
 - [Documentação Expo](https://docs.expo.dev/)
 - [Vision Camera Docs](https://mrousavy.com/react-native-vision-camera/docs/)
 - [React Native Docs](https://reactnative.dev/docs/getting-started)
-
-## 📝 Licença
-
-Este projeto é um trabalho acadêmico desenvolvido para [Nome da Instituição].
