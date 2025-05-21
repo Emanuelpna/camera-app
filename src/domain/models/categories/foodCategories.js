@@ -1,6 +1,6 @@
 export const FOOD_CATEGORIES = {
     frutas: [
-        "maçã", "banana", "laranja", "uva", "morango",
+        "fruit", "cuisine", "fast food", "food", "maçã", "banana", "laranja", "uva", "morango",
         "melancia", "kiwi", "abacaxi", "manga", "mirtilo",
         "pêra", "limão", "mamão", "goiaba"
     ],
